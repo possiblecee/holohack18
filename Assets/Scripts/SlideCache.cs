@@ -27,6 +27,9 @@ public sealed class SlideCache : SingletonBehaviour<SlideCache>
         get { return _paths != null && _paths.Length > _currentIdx + 1; }
     }
 
+    /// <summary>
+    /// Indicates whether there cache has a previous slide available.
+    /// </summary>
     public bool HasPreviousSlide
     {
         get { return _paths != null && _paths.Length > 0 && _currentIdx > 0; }
@@ -94,7 +97,6 @@ public sealed class SlideCache : SingletonBehaviour<SlideCache>
     /// <summary>
     /// Returns the next slide as a Texture2D and steps the current slide pointer forward.
     /// </summary>
-    /// <returns></returns>
     public Texture2D GetNext()
     {
         if (!HasMoreSlides)
@@ -133,7 +135,6 @@ public sealed class SlideCache : SingletonBehaviour<SlideCache>
     /// <summary>
     /// Returns the previous slide as a Texture2D and steps the current slide pointer backwards.
     /// </summary>
-    /// <returns></returns>
     public Texture2D GetPrevious()
     {
         if (!HasPreviousSlide)
@@ -174,7 +175,6 @@ public sealed class SlideCache : SingletonBehaviour<SlideCache>
     /// </summary>
     /// <param name="filename">File name with extension (eg. image.jpg)</param>
     /// <param name="onComplete">Callback for when the process finishes.</param>
-    /// <returns></returns>
     private IEnumerator LoadTexture(string filename, Action<Texture2D> onComplete = null)
     {
         var filePath = Path.Combine(Application.streamingAssetsPath, filename);
@@ -194,7 +194,6 @@ public sealed class SlideCache : SingletonBehaviour<SlideCache>
                         onComplete(result);
                     }
 
-                    Debug.Log("Loaded: " + filename);
                     yield break;
                 }
             }

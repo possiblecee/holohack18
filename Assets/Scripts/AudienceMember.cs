@@ -8,11 +8,28 @@ public class AudienceMember : MonoBehaviour
 {
     private Renderer _renderer;
     private bool _isWatched;
+    private bool _isPresentationOngoing;
+    private float _timeStartedIgnoring;
+
+    /// <summary>
+    /// Total time in seconds the player spent ignoring this member during the presentation.
+    /// </summary>
+    public float TotalTimeBeingIgnored { get; private set; }
 
     private void Awake()
     {
         // Acquire required components
         _renderer = GetComponent<Renderer>();
+    }
+
+    private void OnEnable()
+    {
+        PlayerController.OnPresentationStateChanged += PlayerController_OnPresentationStateChanged;
+    }
+
+    private void OnDisable()
+    {
+        PlayerController.OnPresentationStateChanged -= PlayerController_OnPresentationStateChanged;
     }
 
     /// <summary>
@@ -24,7 +41,44 @@ public class AudienceMember : MonoBehaviour
         if (_isWatched != isWatched)
         {
             _renderer.material.color = isWatched ? Color.yellow : Color.white;
+
+            if (_isPresentationOngoing)
+            {
+                if (isWatched)
+                {
+                    // Player started watching this member
+                    TotalTimeBeingIgnored += Time.time - _timeStartedIgnoring;
+                }
+                else
+                {
+                    // Player started ignoring this member
+                    _timeStartedIgnoring = Time.time;
+                }
+            }
         }
+
+        // Cached watched state
         _isWatched = isWatched;
+    }
+
+    private void PlayerController_OnPresentationStateChanged(object sender, PlayerController.PresentationStateChangedArgs e)
+    {
+        if (e.isStarted)
+        {
+            // Start being ignored by the player
+            _isWatched = false;
+        }
+        // If the presentation finishes with this member being ignored
+        else if (!_isWatched)
+        {
+            // Add the last time interval spent by ignoring this member
+            TotalTimeBeingIgnored += Time.time - _timeStartedIgnoring;
+        }
+
+        // Reset timer
+        _timeStartedIgnoring = Time.time;
+
+        // Cache presentation state
+        _isPresentationOngoing = e.isStarted;
     }
 }

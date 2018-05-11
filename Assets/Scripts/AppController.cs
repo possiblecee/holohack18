@@ -31,6 +31,10 @@ public class AppController : Singleton<AppController> {
 		
 	}
 
+	public void OnPresentationSelected() {
+		selectDocumentUI.gameObject.SetActive(false);
+	}
+
 	public void OnWelcomeNextClick(){
 		welcomeUI.gameObject.SetActive(false);
 		selectDocumentUI.gameObject.SetActive(true);

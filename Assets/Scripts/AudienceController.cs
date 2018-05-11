@@ -11,7 +11,7 @@ public class AudienceController : MonoBehaviour
     [SerializeField] private PlayerController _player;
 
     /// <summary>
-    /// Collection of audence members in the room.
+    /// Collection of audience members in the room.
     /// </summary>
     [SerializeField] private AudienceMember[] _audience;
 

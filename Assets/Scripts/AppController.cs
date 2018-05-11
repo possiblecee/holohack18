@@ -1,26 +1,46 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using HoloToolkit.Unity;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.WSA.Input;
 
 public class AppController : Singleton<AppController> {
 
 	private AppState applicationState;
+	private GestureRecognizer recognizer;
 	[SerializeField] private GameObject welcomeUI;
 	[SerializeField] private GameObject selectDocumentUI;
-	[SerializeField] private GameObject podium;
+	[SerializeField] private PlaceObjectUIController placeObjectUI;
+	[SerializeField] private TapToPlaceParent podium;
 	[SerializeField] private GameObject projection;
 	[SerializeField] private GameObject audience;
 
 	// Use this for initialization
 	void Start () {
 		ShowWelcome();
+		recognizer = new GestureRecognizer();
+		recognizer.StartCapturingGestures();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	void OnEnable()
+	{
+		podium.onObjectPlaced += podium_onObjectPlaced;
+	}
+
+	void OnDisable()
+	{
+		podium.onObjectPlaced -= podium_onObjectPlaced;
+	}
+
+    private void podium_onObjectPlaced(object sender, EventArgs e)
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update () {
 	}
 
 	public void RestartApplication() {
@@ -33,6 +53,10 @@ public class AppController : Singleton<AppController> {
 
 	public void OnPresentationSelected() {
 		selectDocumentUI.gameObject.SetActive(false);
+		placeObjectUI.gameObject.SetActive(true);
+		podium.gameObject.SetActive(true);
+		podium.recognizer = this.recognizer;
+		podium.SetPlace(true);
 	}
 
 	public void OnWelcomeNextClick(){

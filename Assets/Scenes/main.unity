@@ -538,6 +538,11 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 406809018}
   m_Script: {fileID: 11500000, guid: 5300b6e0cbd82db4ba4c3fd0f7d4d2a6, type: 3}
+--- !u!1 &430196630 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1276910262446644, guid: d6405be88e13449449a7655a8d0fc255,
+    type: 2}
+  m_PrefabInternal: {fileID: 1098555188}
 --- !u!1 &432976625 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1418485286676460, guid: 1f81e049a68371248be08c3e94dbcf91,
@@ -817,6 +822,60 @@ GameObject:
   m_PrefabParentObject: {fileID: 1834213651748544, guid: e5cf572f30bede44f9ad16138d748883,
     type: 2}
   m_PrefabInternal: {fileID: 1942128765}
+--- !u!114 &706842391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 706842390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de0c1a42a129fa942b99de9e2f078c8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCam: {fileID: 1708315570}
+--- !u!114 &706842392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 706842390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 706842391}
+          m_MethodName: OnClick
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
+--- !u!65 &706842393
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 706842390}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &800609437
 GameObject:
   m_ObjectHideFlags: 0
@@ -1341,6 +1400,14 @@ Prefab:
     - target: {fileID: 1276910262446644, guid: d6405be88e13449449a7655a8d0fc255, type: 2}
       propertyPath: m_Name
       value: Statistics
+      objectReference: {fileID: 0}
+    - target: {fileID: 114149422654040380, guid: d6405be88e13449449a7655a8d0fc255,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Statistics
+
+
+        Tap here to continue'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d6405be88e13449449a7655a8d0fc255, type: 2}
@@ -2530,9 +2597,10 @@ MonoBehaviour:
   welcomeUI: {fileID: 1355654638}
   selectDocumentUI: {fileID: 1623296005}
   placeObjectUI: {fileID: 406809020}
+  statistics: {fileID: 430196630}
   podium: {fileID: 1577533878}
-  projection: {fileID: 1577533877}
-  audience: {fileID: 706842390}
+  projection: {fileID: 362614164}
+  audience: {fileID: 706842391}
 --- !u!4 &2090849624
 Transform:
   m_ObjectHideFlags: 0

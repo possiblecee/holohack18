@@ -13,9 +13,10 @@ public class AppController : Singleton<AppController> {
 	[SerializeField] private GameObject welcomeUI;
 	[SerializeField] private GameObject selectDocumentUI;
 	[SerializeField] private PlaceObjectUIController placeObjectUI;
+	[SerializeField] private GameObject statistics;
 	[SerializeField] private TapToPlaceParent podium;
-	[SerializeField] private GameObject projection;
-	[SerializeField] private GameObject audience;
+	[SerializeField] private TapToPlaceParent projection;
+	[SerializeField] private TapToPlaceParent audience;
 
 	// Use this for initialization
 	void Start () {
@@ -27,16 +28,42 @@ public class AppController : Singleton<AppController> {
 	void OnEnable()
 	{
 		podium.onObjectPlaced += podium_onObjectPlaced;
+		projection.onObjectPlaced += projection_OnObjectPlaced;
+		audience.onObjectPlaced += audience_OnObjectPlaced;
 	}
 
-	void OnDisable()
+    private void audience_OnObjectPlaced(object sender, EventArgs e)
+    {
+        audience.onObjectPlaced -= audience_OnObjectPlaced;
+		OnPressentationStarted();
+    }
+
+	// After all object placed, this method will be executed
+	public void OnPressentationStarted() {
+		// Use this to start the pressentation
+	}
+
+    private void projection_OnObjectPlaced(object sender, EventArgs e)
+    {
+        projection.onObjectPlaced -= projection_OnObjectPlaced;
+		audience.recognizer = this.recognizer;
+		audience.gameObject.SetActive(true);
+		audience.SetPlace(true);
+    }
+
+    void OnDisable()
 	{
 		podium.onObjectPlaced -= podium_onObjectPlaced;
+		projection.onObjectPlaced -= projection_OnObjectPlaced;
+		audience.onObjectPlaced -= audience_OnObjectPlaced;
 	}
 
     private void podium_onObjectPlaced(object sender, EventArgs e)
     {
-        
+        podium.onObjectPlaced -= podium_onObjectPlaced;
+		projection.gameObject.SetActive(true);
+		projection.SetPlace(true);
+		projection.recognizer = recognizer;
     }
 
     // Update is called once per frame
@@ -47,8 +74,9 @@ public class AppController : Singleton<AppController> {
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
+	// If the pressentation ended, call this method
 	public void EndPresentation(){
-		
+		statistics.SetActive(true);
 	}
 
 	public void OnPresentationSelected() {
@@ -62,10 +90,6 @@ public class AppController : Singleton<AppController> {
 	public void OnWelcomeNextClick(){
 		welcomeUI.gameObject.SetActive(false);
 		selectDocumentUI.gameObject.SetActive(true);
-	}
-
-	public void ShowStatistics(){
-		
 	}
 
 	public void ShowWelcome(){

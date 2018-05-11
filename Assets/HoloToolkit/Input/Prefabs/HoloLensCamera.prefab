@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 124000011504821460}
   - component: {fileID: 81000013783107718}
   - component: {fileID: 114000013543835744}
+  - component: {fileID: 114664586200653068}
   m_Layer: 0
   m_Name: HoloLensCamera
   m_TagString: MainCamera
@@ -408,7 +409,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
-  m_StereoMirrorMode: 0
 --- !u!81 &81000013783107718
 AudioListener:
   m_ObjectHideFlags: 1
@@ -647,6 +647,18 @@ MonoBehaviour:
   Axis0Destination: 5
   Axis1Destination: 4
   Axis2Destination: 6
+--- !u!114 &114664586200653068
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011021619270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 236782fa446a78748a2230953d894fd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fieldOfView: 10
 --- !u!124 &124000011504821460
 Behaviour:
   m_ObjectHideFlags: 1

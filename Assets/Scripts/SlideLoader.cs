@@ -25,7 +25,6 @@ public class SlideLoader : MonoBehaviour {
         _init = true;
         _client = new WebClient(this);
         _slideResourcePaths = new List<string>();
-        LoadTestSlide(null);
     }
 
     public void LoadTestSlide(OnSlidesLoaded callback)

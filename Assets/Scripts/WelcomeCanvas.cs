@@ -38,30 +38,20 @@ public class WelcomeCanvas : MonoBehaviour
         var gazeDirection = mainCam.transform.forward;
 
         RaycastHit hitInfo;
-        bool hasHit = false;
-        float scale = 1f;
         if (Physics.Raycast(headPosition, gazeDirection, out hitInfo,
             DefaultGazeDistance, SpatialMappingManager.Instance.LayerMask))
         {
             // Move this object's parent object to
             // where the raycast hit the Spatial Mapping mesh.
             interpolator.SetTargetPosition(hitInfo.point + (gazeDirection * -0.1f));
-            hasHit = true;
-            var distance = Vector3.Distance(hitInfo.point, headPosition);
-
-            if (distance > 0)
-            {
-                scale = distance / DefaultGazeDistance;
-                this.transform.localScale = scale * defaultScale;
-            }
         }
         else
         {
             Vector3 pos = headPosition + gazeDirection * DefaultGazeDistance;
             interpolator.SetTargetPosition(pos);
-            interpolator.SetTargetLocalScale(scale * defaultScale);
         }
 
+        // billboard - rotation lock around Y
         Quaternion toQuat = Camera.main.transform.localRotation;
         toQuat.x = 0;
         toQuat.z = 0;

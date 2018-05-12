@@ -54,14 +54,14 @@ public class WebClient : MonoBehaviour {
 		return false;
 	}
 
-	public void Get(string url, OnReceive onRecive)
+	public void Get(string url, OnReceive onReceive)
 	{
-		requestQueue.Enqueue(new TextRequest(url, onRecive));
+		requestQueue.Enqueue(new TextRequest(url, onReceive));
 	}
 
-	public void GetImage(string url, OnImageReceive onRecive, params object[] extra)
+	public void GetImage(string url, OnImageReceive onReceive, params object[] extra)
 	{
-		requestQueue.Enqueue(new ImageRequest(url, onRecive, extra));
+		requestQueue.Enqueue(new ImageRequest(url, onReceive, extra));
 	}
 
 	private void ProcessRequest(Request request)
@@ -101,7 +101,6 @@ public class WebClient : MonoBehaviour {
 		{
 			if (request is ImageRequest)
 			{
-				// Process the image
 				var resultingTexture = new Texture2D(4, 4);
 				if (!resultingTexture.LoadImage(www.bytes))
 				{
@@ -124,11 +123,9 @@ public class WebClient : MonoBehaviour {
 		var textRequest = request as TextRequest;
 		if (textRequest != null)
 		{
-			// Get a reference to the resulting text
 			var text = result as string;
 			if (text == null) throw new InvalidCastException();
 
-			// Invoke completion callback
 			textRequest.onReceive(text, true, request);
 		}
 		else
@@ -136,7 +133,6 @@ public class WebClient : MonoBehaviour {
 			var imageRequest = request as ImageRequest;
 			if (imageRequest != null)
 			{
-				// Get a reference to the resulting texture
 				var texture = result as Texture2D;
 				if (texture == null) throw new InvalidCastException();
 

@@ -9,18 +9,6 @@ public class SlideLoader : MonoBehaviour {
 
     private static readonly string BaseUrl = "http://magnum-force-chicken.westeurope.cloudapp.azure.com/api";
 
-    public void LoadSlide(string slideUrl, OnSlidesLoaded callback)
-    {
-        _slideResourcePaths.Clear();
-        var url = string.Format("{0}/{1}/{2}", BaseUrl, "convert", WWW.EscapeURL(slideUrl));
-        _client.Get(url, OnReceive);
-        StartCoroutine(CheckDownloadState(callback));
-    }
-
-    private static readonly string TestUrl = "http://magnum-force-chicken.westeurope.cloudapp.azure.com/api/convert/https%3A%2F%2Fwww.sample-videos.com%2Fppt%2FSample-PPT-File-500kb.ppt";
-
-    private static readonly string GetSlideUrl = "http://magnum-force-chicken.westeurope.cloudapp.azure.com/api/get";
-
     public delegate void OnSlidesLoaded(List<string> slideResourcePaths);
 
     private bool _init;
@@ -38,10 +26,19 @@ public class SlideLoader : MonoBehaviour {
         _slideResourcePaths = new List<string>();
     }
 
-    public void LoadTestSlide(OnSlidesLoaded callback)
+    public void LoadSlide(string slideUrl, OnSlidesLoaded callback)
     {
         _slideResourcePaths.Clear();
-        _client.Get(TestUrl, OnReceive);
+        var url = string.Format("{0}/{1}/{2}", BaseUrl, "convert", WWW.EscapeURL(slideUrl));
+        _client.Get(url, OnReceive);
+        StartCoroutine(CheckDownloadState(callback));
+    }
+
+    public void LoadTestSlide(OnSlidesLoaded callback)
+    {
+        var testUrl = "http://magnum-force-chicken.westeurope.cloudapp.azure.com/api/convert/https%3A%2F%2Fwww.sample-videos.com%2Fppt%2FSample-PPT-File-500kb.ppt";
+        _slideResourcePaths.Clear();
+        _client.Get(testUrl, OnReceive);
         StartCoroutine(CheckDownloadState(callback));
     }
 
@@ -64,9 +61,14 @@ public class SlideLoader : MonoBehaviour {
             _remainingSlides = result.files.Count;
             foreach (var slideName in result.files)
             {
-                var slideUrl = string.Format("{0}/{1}/{2}", GetSlideUrl, result.hash, slideName);
+                var slideUrl = string.Format("{0}/{1}/{2}/{3}", BaseUrl, "get", result.hash, slideName);
                 _client.GetImage(slideUrl, OnSlideImageReceive, result.hash, slideName);
             }
+        }
+        else
+        {
+            Debug.LogError("Conversion failed.");
+            _remainingSlides = 0;
         }
 	}
 
@@ -77,6 +79,8 @@ public class SlideLoader : MonoBehaviour {
             _remainingSlides--;
             var prefix = extra[0] as string;
             var fileName = extra[1] as string;
+
+            Directory.CreateDirectory(Application.streamingAssetsPath);
 
             var filePath = Application.streamingAssetsPath + "/" + prefix + "_" + fileName;
 

@@ -1,64 +1,75 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
+using System.Collections;
 
 public class SlideLoader : MonoBehaviour {
 
-	private static string TestUrl = "http://magnum-force-chicken.westeurope.cloudapp.azure.com/api/convert/https%3A%2F%2Fwww.sample-videos.com%2Fppt%2FSample-PPT-File-500kb.ppt";
+    private static readonly string TestUrl = "http://magnum-force-chicken.westeurope.cloudapp.azure.com/api/convert/https%3A%2F%2Fwww.sample-videos.com%2Fppt%2FSample-PPT-File-500kb.ppt";
 
-    private static string GetSlideUrl = "http://magnum-force-chicken.westeurope.cloudapp.azure.com/api/get";
+    private static readonly string GetSlideUrl = "http://magnum-force-chicken.westeurope.cloudapp.azure.com/api/get";
 
-	private bool _init;
+    public delegate void OnSlidesLoaded(List<string> slideResourcePaths);
 
-	private WebClient client;
+    private bool _init;
 
-    [System.Serializable]
-    class ConversionResult
+    private WebClient _client;
+
+    private int? _remainingSlides = null;
+
+    private List<string> _slideResourcePaths;
+
+    void Start()
     {
-        public string hash;
-        public List<string> files;
-
-        public static ConversionResult CreateFromJSON(string jsonString)
-        {
-            return JsonUtility.FromJson<ConversionResult>(jsonString);
-        }
-
+        _init = true;
+        _client = new WebClient(this);
+        _slideResourcePaths = new List<string>();
+        LoadTestSlide(null);
     }
 
-    void Start () 
-	{
-		_init = true;
-		client = new WebClient (this);
-		client.Get (TestUrl, OnReceive);
-	}
+    public void LoadTestSlide(OnSlidesLoaded callback)
+    {
+        _slideResourcePaths.Clear();
+        _client.Get(TestUrl, OnReceive);
+        StartCoroutine(CheckDownloadState(callback));
+    }
 
-	void OnReceive(string text, bool success, params object[] extensions)
+    IEnumerator CheckDownloadState(OnSlidesLoaded callback)
+    {
+        yield return new WaitUntil(() => _remainingSlides == 0);
+
+        if (callback != null)
+        {
+            callback(_slideResourcePaths);
+        }
+    }
+
+    void OnReceive(string text, bool success, params object[] extensions)
 	{
         if (success)
         {
             var result = ConversionResult.CreateFromJSON(text);
+            _remainingSlides = result.files.Count;
             foreach (var slideName in result.files)
             {
                 var slideUrl = string.Format("{0}/{1}/{2}", GetSlideUrl, result.hash, slideName);
-                client.GetImage(slideUrl, OnSlideImageReceive, result.hash, slideName);
+                _client.GetImage(slideUrl, OnSlideImageReceive, result.hash, slideName);
             }
         }
 	}
-
-    private string RemoveFileName(string pathString)
-    {
-        return Path.GetDirectoryName(pathString);
-    }
 
     void OnSlideImageReceive(Texture2D texture, bool success, string errorText, params object[] extensions)
     {
         if (success)
         {
-            var folder = extensions[0] as string;
+            _remainingSlides--;
+            var prefix = extensions[0] as string;
             var fileName = extensions[1] as string;
 
-            var folderPath = Application.streamingAssetsPath + "/" + folder;
-            var filePath = folderPath + "_" + fileName;
+            var filePath = Application.streamingAssetsPath + "/" + prefix + "_" + fileName;
+
+            _slideResourcePaths.Add(prefix + "_" + fileName);
 
             FileStream file = File.Open(filePath, FileMode.Create);
             if (texture != null)
@@ -81,10 +92,9 @@ public class SlideLoader : MonoBehaviour {
 			return;
 		}
 
-		if (client.NumberOfPendingRequests > 0) 
+		if (_client.NumberOfPendingRequests > 0) 
 		{
-			client.ProcessNextRequest ();
+			_client.ProcessNextRequest ();
 		}
 	}
-
 }

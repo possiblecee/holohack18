@@ -17,12 +17,14 @@ public class AppController : Singleton<AppController> {
 	[SerializeField] private TapToPlaceParent podium;
 	[SerializeField] private TapToPlaceParent projection;
 	[SerializeField] private TapToPlaceParent audience;
+	private AudienceController audienceController;
 
 	// Use this for initialization
 	void Start () {
 		ShowWelcome();
 		recognizer = new GestureRecognizer();
 		recognizer.StartCapturingGestures();
+		audienceController = audience.GetComponent<AudienceController>();
 	}
 
 	void OnEnable()

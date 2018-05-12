@@ -9,6 +9,7 @@ public class TapToPlaceParent : MonoBehaviour
 {
     bool placing = false;
     public Camera mainCam;
+    public RotationType rotationType;
     public GestureRecognizer recognizer;
     public EventHandler<EventArgs> onObjectPlaced;
     public void NotifyOnObjectPlace(){
@@ -76,12 +77,25 @@ public class TapToPlaceParent : MonoBehaviour
                 Debug.Log("HITT!!!");
                 this.transform.position = hitInfo.point + (gazeDirection * -0.01f);
 
-                // Rotate this object's parent object to face the user.
-                /*Quaternion toQuat = mainCam.transform.localRotation;
-                toQuat.x = 0;
-                toQuat.z = 0;
-                this.transform.rotation = toQuat;*/
+                if(rotationType == RotationType.NORMAL) {
+                    // Rotate this object's parent object to face the user.
+                    Quaternion toQuat = mainCam.transform.localRotation;
+                    toQuat.x = 0;
+                    toQuat.z = 0;
+                    this.transform.forward = new Vector3(hitInfo.normal.x, hitInfo.normal.y, hitInfo.normal.z);
+                }
+                if(rotationType == RotationType.CAMERA) {
+                    Quaternion toQuat = Camera.main.transform.localRotation;
+                    toQuat.x = 0;
+                    toQuat.z = 0;
+                    this.transform.parent.rotation = toQuat;
+                }
             }
         }
     }
+}
+
+public enum RotationType{
+    CAMERA,
+    NORMAL
 }

@@ -3,13 +3,15 @@
 /// <summary>
 /// Represents a single member in the audience.
 /// </summary>
-[RequireComponent(typeof(Renderer))]
+//[RequireComponent(typeof(Renderer))]
+[RequireComponent(typeof(Animator))]
 public class AudienceMember : MonoBehaviour
 {
-    private Renderer _renderer;
+    //private Renderer _renderer;
     private bool _isWatched;
     private bool _isPresentationOngoing;
     private float _timeStartedIgnoring;
+    private Animator animatorComp;
 
     /// <summary>
     /// Total time in seconds the player spent ignoring this member during the presentation.
@@ -19,7 +21,8 @@ public class AudienceMember : MonoBehaviour
     private void Awake()
     {
         // Acquire required components
-        _renderer = GetComponent<Renderer>();
+        //_renderer = GetComponent<Renderer>();
+        animatorComp = GetComponent<Animator>();
     }
 
     private void OnEnable()
@@ -32,6 +35,10 @@ public class AudienceMember : MonoBehaviour
         PlayerController.OnPresentationStateChanged -= PlayerController_OnPresentationStateChanged;
     }
 
+    public void SetInterest(float interest) {
+        this.animatorComp.SetFloat("Interest", interest);
+    }
+
     /// <summary>
     /// Toggles the watched state of the audience member.
     /// </summary>
@@ -40,7 +47,7 @@ public class AudienceMember : MonoBehaviour
     {
         if (_isWatched != isWatched)
         {
-            _renderer.material.color = isWatched ? Color.yellow : Color.white;
+            //_renderer.material.color = isWatched ? Color.yellow : Color.white;
 
             if (_isPresentationOngoing)
             {

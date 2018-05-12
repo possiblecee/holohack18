@@ -28,4 +28,10 @@ public class AudienceController : MonoBehaviour
             member.ToggleWatched(isWatched: angle < fieldOfView);
         }
     }
+
+    public void SetInterest(float interest){
+        foreach(var watcher in this._audience){
+            watcher.SetInterest(interest);
+        }
+    }
 }

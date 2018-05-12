@@ -89,7 +89,7 @@ public class TapToPlaceParent : MonoBehaviour
             var headPosition = mainCam.transform.position;
             var gazeDirection = mainCam.transform.forward;
 
-            if (positionType == PositionType.NORMAL)
+            if (positionType == PositionType.NORMAL || positionType == PositionType.FIXEDHEIGHT)
             {
                 SetOnSurface();
             }
@@ -112,22 +112,32 @@ public class TapToPlaceParent : MonoBehaviour
         {
             // Move this object's parent object to
             // where the raycast hit the Spatial Mapping mesh.
-            interpolator.SetTargetPosition(hitInfo.point + (gazeDirection * -0.01f));
+            interpolator.SetTargetPosition(hitInfo.point + (gazeDirection * -0.1f));
             hasHit = true;
         }
         else
         {
             Vector3 pos = headPosition + gazeDirection * DefaultGazeDistance;
+
+            if (positionType == PositionType.FIXEDHEIGHT)
+            {
+                pos.y = headPosition.y + DefaultOffset;
+            }
+
             interpolator.SetTargetPosition(pos);
         }
 
-        if (rotationType == RotationType.NORMAL && hasHit)
+        if (hasHit && rotationType == RotationType.NORMAL)
         {
-            // Rotate this object's parent object to face the user.
-            interpolator.SetTargetRotation(Quaternion.FromToRotation(Vector3.forward, -hitInfo.normal));
+            // set rotation on wall
+            Quaternion toQuat = Quaternion.LookRotation(-hitInfo.normal, Vector3.up);
+            toQuat.x = 0;
+            toQuat.z = 0;
+            interpolator.SetTargetRotation(toQuat);
         }
         else
         {
+            // billboard - rotation lock around Y
             Quaternion toQuat = Camera.main.transform.localRotation;
             toQuat.x = 0;
             toQuat.z = 0;
@@ -152,7 +162,7 @@ public class TapToPlaceParent : MonoBehaviour
 
     private float GetGround()
     {
-        if(ground != 0)
+        if (ground != 0)
         {
             return ground;
         }

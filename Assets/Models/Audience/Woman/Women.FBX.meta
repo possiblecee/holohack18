@@ -1,0 +1,395 @@
+fileFormatVersion: 2
+guid: d9d8cbe2ccf71644c9cfd0b2b93ac4ec
+timeCreated: 1526129599
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: jessica_rg_001_Biped
+    100002: jessica_rg_001_Biped eyeEndJnt_l
+    100004: jessica_rg_001_Biped eyeEndJnt_lNub
+    100006: jessica_rg_001_Biped eyeEndJnt_r
+    100008: jessica_rg_001_Biped eyeEndJnt_rNub
+    100010: jessica_rg_001_Biped eyeJnt_l
+    100012: jessica_rg_001_Biped eyeJnt_lNub
+    100014: jessica_rg_001_Biped eyeJnt_r
+    100016: jessica_rg_001_Biped eyeJnt_rNub
+    100018: jessica_rg_001_Biped Footsteps
+    100020: jessica_rg_001_Biped Head
+    100022: jessica_rg_001_Biped HeadNub
+    100024: jessica_rg_001_Biped L Calf
+    100026: jessica_rg_001_Biped L Clavicle
+    100028: jessica_rg_001_Biped L Finger0
+    100030: jessica_rg_001_Biped L Finger01
+    100032: jessica_rg_001_Biped L Finger02
+    100034: jessica_rg_001_Biped L Finger0Nub
+    100036: jessica_rg_001_Biped L Finger1
+    100038: jessica_rg_001_Biped L Finger11
+    100040: jessica_rg_001_Biped L Finger12
+    100042: jessica_rg_001_Biped L Finger1Nub
+    100044: jessica_rg_001_Biped L Finger2
+    100046: jessica_rg_001_Biped L Finger21
+    100048: jessica_rg_001_Biped L Finger22
+    100050: jessica_rg_001_Biped L Finger2Nub
+    100052: jessica_rg_001_Biped L Finger3
+    100054: jessica_rg_001_Biped L Finger31
+    100056: jessica_rg_001_Biped L Finger32
+    100058: jessica_rg_001_Biped L Finger3Nub
+    100060: jessica_rg_001_Biped L Finger4
+    100062: jessica_rg_001_Biped L Finger41
+    100064: jessica_rg_001_Biped L Finger42
+    100066: jessica_rg_001_Biped L Finger4Nub
+    100068: jessica_rg_001_Biped L Foot
+    100070: jessica_rg_001_Biped L Forearm
+    100072: jessica_rg_001_Biped L Hand
+    100074: jessica_rg_001_Biped L Thigh
+    100076: jessica_rg_001_Biped L Toe0
+    100078: jessica_rg_001_Biped L Toe0Nub
+    100080: jessica_rg_001_Biped L UpperArm
+    100082: jessica_rg_001_Biped lowerJawEndJnt
+    100084: jessica_rg_001_Biped lowerJawEndJntNub
+    100086: jessica_rg_001_Biped lowerJawJnt
+    100088: jessica_rg_001_Biped lowerJawJntNub
+    100090: jessica_rg_001_Biped Neck
+    100092: jessica_rg_001_Biped Pelvis
+    100094: jessica_rg_001_Biped R Calf
+    100096: jessica_rg_001_Biped R Clavicle
+    100098: jessica_rg_001_Biped R Finger0
+    100100: jessica_rg_001_Biped R Finger01
+    100102: jessica_rg_001_Biped R Finger02
+    100104: jessica_rg_001_Biped R Finger0Nub
+    100106: jessica_rg_001_Biped R Finger1
+    100108: jessica_rg_001_Biped R Finger11
+    100110: jessica_rg_001_Biped R Finger12
+    100112: jessica_rg_001_Biped R Finger1Nub
+    100114: jessica_rg_001_Biped R Finger2
+    100116: jessica_rg_001_Biped R Finger21
+    100118: jessica_rg_001_Biped R Finger22
+    100120: jessica_rg_001_Biped R Finger2Nub
+    100122: jessica_rg_001_Biped R Finger3
+    100124: jessica_rg_001_Biped R Finger31
+    100126: jessica_rg_001_Biped R Finger32
+    100128: jessica_rg_001_Biped R Finger3Nub
+    100130: jessica_rg_001_Biped R Finger4
+    100132: jessica_rg_001_Biped R Finger41
+    100134: jessica_rg_001_Biped R Finger42
+    100136: jessica_rg_001_Biped R Finger4Nub
+    100138: jessica_rg_001_Biped R Foot
+    100140: jessica_rg_001_Biped R Forearm
+    100142: jessica_rg_001_Biped R Hand
+    100144: jessica_rg_001_Biped R Thigh
+    100146: jessica_rg_001_Biped R Toe0
+    100148: jessica_rg_001_Biped R Toe0Nub
+    100150: jessica_rg_001_Biped R UpperArm
+    100152: jessica_rg_001_Biped Spine
+    100154: jessica_rg_001_Biped Spine1
+    100156: jessica_rg_001_Biped Spine2
+    100158: jessica_rg_001_body_grp
+    100160: jessica_rg_001_body_grp 1
+    100162: jessica_rg_001_cloth_grp
+    100164: jessica_rg_001_cloth_grp 1
+    100166: jessica_rg_001_geometry_grp
+    100168: jessica_rg_001_geometry_grp 1
+    100170: jessica_rg_001_hair
+    100172: jessica_rg_001_rig_grp
+    100174: jessica_rg_001_rig_grp 1
+    100176: jessica_rg_001_teeth_bottom
+    100178: jessica_rg_001_teeth_top
+    100180: //RootNode
+    100182: rp_jessica_rigged_001
+    100184: rp_jessica_rigged_001 1
+    400000: jessica_rg_001_Biped
+    400002: jessica_rg_001_Biped eyeEndJnt_l
+    400004: jessica_rg_001_Biped eyeEndJnt_lNub
+    400006: jessica_rg_001_Biped eyeEndJnt_r
+    400008: jessica_rg_001_Biped eyeEndJnt_rNub
+    400010: jessica_rg_001_Biped eyeJnt_l
+    400012: jessica_rg_001_Biped eyeJnt_lNub
+    400014: jessica_rg_001_Biped eyeJnt_r
+    400016: jessica_rg_001_Biped eyeJnt_rNub
+    400018: jessica_rg_001_Biped Footsteps
+    400020: jessica_rg_001_Biped Head
+    400022: jessica_rg_001_Biped HeadNub
+    400024: jessica_rg_001_Biped L Calf
+    400026: jessica_rg_001_Biped L Clavicle
+    400028: jessica_rg_001_Biped L Finger0
+    400030: jessica_rg_001_Biped L Finger01
+    400032: jessica_rg_001_Biped L Finger02
+    400034: jessica_rg_001_Biped L Finger0Nub
+    400036: jessica_rg_001_Biped L Finger1
+    400038: jessica_rg_001_Biped L Finger11
+    400040: jessica_rg_001_Biped L Finger12
+    400042: jessica_rg_001_Biped L Finger1Nub
+    400044: jessica_rg_001_Biped L Finger2
+    400046: jessica_rg_001_Biped L Finger21
+    400048: jessica_rg_001_Biped L Finger22
+    400050: jessica_rg_001_Biped L Finger2Nub
+    400052: jessica_rg_001_Biped L Finger3
+    400054: jessica_rg_001_Biped L Finger31
+    400056: jessica_rg_001_Biped L Finger32
+    400058: jessica_rg_001_Biped L Finger3Nub
+    400060: jessica_rg_001_Biped L Finger4
+    400062: jessica_rg_001_Biped L Finger41
+    400064: jessica_rg_001_Biped L Finger42
+    400066: jessica_rg_001_Biped L Finger4Nub
+    400068: jessica_rg_001_Biped L Foot
+    400070: jessica_rg_001_Biped L Forearm
+    400072: jessica_rg_001_Biped L Hand
+    400074: jessica_rg_001_Biped L Thigh
+    400076: jessica_rg_001_Biped L Toe0
+    400078: jessica_rg_001_Biped L Toe0Nub
+    400080: jessica_rg_001_Biped L UpperArm
+    400082: jessica_rg_001_Biped lowerJawEndJnt
+    400084: jessica_rg_001_Biped lowerJawEndJntNub
+    400086: jessica_rg_001_Biped lowerJawJnt
+    400088: jessica_rg_001_Biped lowerJawJntNub
+    400090: jessica_rg_001_Biped Neck
+    400092: jessica_rg_001_Biped Pelvis
+    400094: jessica_rg_001_Biped R Calf
+    400096: jessica_rg_001_Biped R Clavicle
+    400098: jessica_rg_001_Biped R Finger0
+    400100: jessica_rg_001_Biped R Finger01
+    400102: jessica_rg_001_Biped R Finger02
+    400104: jessica_rg_001_Biped R Finger0Nub
+    400106: jessica_rg_001_Biped R Finger1
+    400108: jessica_rg_001_Biped R Finger11
+    400110: jessica_rg_001_Biped R Finger12
+    400112: jessica_rg_001_Biped R Finger1Nub
+    400114: jessica_rg_001_Biped R Finger2
+    400116: jessica_rg_001_Biped R Finger21
+    400118: jessica_rg_001_Biped R Finger22
+    400120: jessica_rg_001_Biped R Finger2Nub
+    400122: jessica_rg_001_Biped R Finger3
+    400124: jessica_rg_001_Biped R Finger31
+    400126: jessica_rg_001_Biped R Finger32
+    400128: jessica_rg_001_Biped R Finger3Nub
+    400130: jessica_rg_001_Biped R Finger4
+    400132: jessica_rg_001_Biped R Finger41
+    400134: jessica_rg_001_Biped R Finger42
+    400136: jessica_rg_001_Biped R Finger4Nub
+    400138: jessica_rg_001_Biped R Foot
+    400140: jessica_rg_001_Biped R Forearm
+    400142: jessica_rg_001_Biped R Hand
+    400144: jessica_rg_001_Biped R Thigh
+    400146: jessica_rg_001_Biped R Toe0
+    400148: jessica_rg_001_Biped R Toe0Nub
+    400150: jessica_rg_001_Biped R UpperArm
+    400152: jessica_rg_001_Biped Spine
+    400154: jessica_rg_001_Biped Spine1
+    400156: jessica_rg_001_Biped Spine2
+    400158: jessica_rg_001_body_grp
+    400160: jessica_rg_001_body_grp 1
+    400162: jessica_rg_001_cloth_grp
+    400164: jessica_rg_001_cloth_grp 1
+    400166: jessica_rg_001_geometry_grp
+    400168: jessica_rg_001_geometry_grp 1
+    400170: jessica_rg_001_hair
+    400172: jessica_rg_001_rig_grp
+    400174: jessica_rg_001_rig_grp 1
+    400176: jessica_rg_001_teeth_bottom
+    400178: jessica_rg_001_teeth_top
+    400180: //RootNode
+    400182: rp_jessica_rigged_001
+    400184: rp_jessica_rigged_001 1
+    4300000: jessica_rg_001_hair
+    4300002: jessica_rg_001_teeth_top
+    4300004: jessica_rg_001_teeth_bottom
+    7400000: Impatient
+    7400002: Watching
+    7400004: Idle
+    9500000: //RootNode
+    13700000: jessica_rg_001_hair
+    13700002: jessica_rg_001_teeth_bottom
+    13700004: jessica_rg_001_teeth_top
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: jessica_rg_001_glossy_mat
+    second: {fileID: 2100000, guid: f83c5a93edde50044823801d4bca011f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: jessica_rg_001_hair_mat
+    second: {fileID: 2100000, guid: 3a0458cfe015f1344b3ed26045d5c8d9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: jessica_rg_001_shirt_mat
+    second: {fileID: 2100000, guid: e4e6c408d1b51cd43a27ef61865752f0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: jessica_rg_001_shoe_mat
+    second: {fileID: 2100000, guid: e477beaddc8f93a48b12ad156b25a69c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: jessica_rg_001_skin_mat
+    second: {fileID: 2100000, guid: f83c5a93edde50044823801d4bca011f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: jessica_rg_001_trousers_mat
+    second: {fileID: 2100000, guid: e4e6c408d1b51cd43a27ef61865752f0, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Impatient
+      takeName: Take 001
+      firstFrame: -63
+      lastFrame: 143
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 191
+      lastFrame: 385
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Watching
+      takeName: Take 001
+      firstFrame: 247
+      lastFrame: 376
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 1
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

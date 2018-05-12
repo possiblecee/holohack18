@@ -59,7 +59,7 @@ public class AudienceController : MonoBehaviour
             var angle = Vector3.Angle(_player.transform.forward, directionToMember);
 
             // Notify the audience member whether its being watched or not.
-            var watched = angle < fieldOfView || 180.0f - angle < fieldOfView;
+            var watched = angle < fieldOfView;
             member.ToggleWatched(isWatched: watched);
             if(watched)
                 watchingSomeone = true;

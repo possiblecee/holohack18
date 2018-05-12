@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using HoloToolkit.Unity;
 using HoloToolkit.Unity.SpatialMapping;
 using UnityEngine;
 using UnityEngine.XR.WSA.Input;
@@ -13,6 +14,14 @@ public class TapToPlaceParent : MonoBehaviour
     public PositionType positionType;
     public GestureRecognizer recognizer;
     public EventHandler<EventArgs> onObjectPlaced;
+
+    [Tooltip("Distance from camera to keep the object while placing it.")]
+    public float DefaultGazeDistance = 2.0f;
+
+    public float DefaultOffset = 0;
+
+    private Interpolator interpolator;
+
     public void NotifyOnObjectPlace()
     {
         if (onObjectPlaced != null)
@@ -59,6 +68,14 @@ public class TapToPlaceParent : MonoBehaviour
         SetPlace(true);
     }
 
+    private void Start()
+    {
+        interpolator = this.GetComponent<Interpolator>();
+        if (interpolator == null)
+        {
+            interpolator = this.gameObject.AddComponent<Interpolator>();
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -74,45 +91,63 @@ public class TapToPlaceParent : MonoBehaviour
 
             if (positionType == PositionType.NORMAL)
             {
-                RaycastHit hitInfo;
-                if (Physics.Raycast(headPosition, gazeDirection, out hitInfo,
-                    30.0f, SpatialMappingManager.Instance.LayerMask))
-                {
-                    // Move this object's parent object to
-                    // where the raycast hit the Spatial Mapping mesh.
-                    Debug.Log("HITT!!!");
-                    this.transform.position = hitInfo.point + (gazeDirection * -0.01f);
-
-                    if (rotationType == RotationType.NORMAL)
-                    {
-                        // Rotate this object's parent object to face the user.
-                        Quaternion toQuat = mainCam.transform.localRotation;
-                        toQuat.x = 0;
-                        toQuat.z = 0;
-                        this.transform.forward = new Vector3(hitInfo.normal.x, hitInfo.normal.y, hitInfo.normal.z);
-                    }
-                    if (rotationType == RotationType.CAMERA)
-                    {
-                        Quaternion toQuat = Camera.main.transform.localRotation;
-                        toQuat.x = 0;
-                        toQuat.z = 0;
-                        this.transform.rotation = toQuat;
-                    }
-                }
+                SetOnSurface();
             }
             else
             {
-                float distance = 3f;
-                Vector3 pos = headPosition + gazeDirection * distance;
-                pos.y = GetGround();
-                this.transform.position = pos;
-
-                Quaternion toQuat = Camera.main.transform.localRotation;
-                toQuat.x = 0;
-                toQuat.z = 0;
-                this.transform.rotation = toQuat;
+                SetOnGround();
             }
         }
+    }
+
+    private void SetOnSurface()
+    {
+        var headPosition = mainCam.transform.position;
+        var gazeDirection = mainCam.transform.forward;
+
+        RaycastHit hitInfo;
+        bool hasHit = false;
+        if (Physics.Raycast(headPosition, gazeDirection, out hitInfo,
+            DefaultGazeDistance, SpatialMappingManager.Instance.LayerMask))
+        {
+            // Move this object's parent object to
+            // where the raycast hit the Spatial Mapping mesh.
+            interpolator.SetTargetPosition(hitInfo.point + (gazeDirection * -0.01f));
+            hasHit = true;
+        }
+        else
+        {
+            Vector3 pos = headPosition + gazeDirection * DefaultGazeDistance;
+            interpolator.SetTargetPosition(pos);
+        }
+
+        if (rotationType == RotationType.NORMAL && hasHit)
+        {
+            // Rotate this object's parent object to face the user.
+            interpolator.SetTargetRotation(Quaternion.LookRotation(-hitInfo.normal, Vector3.up));
+        }
+        else
+        {
+            Quaternion toQuat = Camera.main.transform.localRotation;
+            toQuat.x = 0;
+            toQuat.z = 0;
+            interpolator.SetTargetRotation(toQuat);
+        }
+    }
+
+    private void SetOnGround()
+    {
+        var headPosition = mainCam.transform.position;
+        var gazeDirection = mainCam.transform.forward;
+
+        Vector3 pos = headPosition + gazeDirection * DefaultGazeDistance;
+        pos.y = GetGround() + DefaultOffset;
+        interpolator.SetTargetPosition(pos);
+
+        Quaternion toQuat = Camera.main.transform.localRotation;
+        toQuat.x = 0;
+        toQuat.z = 0;
+        interpolator.SetTargetRotation(toQuat);
     }
 
     private float GetGround()
@@ -123,7 +158,7 @@ public class TapToPlaceParent : MonoBehaviour
         }
 
         RaycastHit hitinfo;
-        if (Physics.BoxCast(new Vector3(0, -10, 0), new Vector3(5, 1, 5), Vector3.up, out hitinfo))
+        if (Physics.BoxCast(new Vector3(0, -10, 0), new Vector3(5, 0.1f, 5), Vector3.up, out hitinfo, Quaternion.identity, 30f, SpatialMappingManager.Instance.LayerMask))
         {
             ground = hitinfo.point.y;
             Debug.Log("Ground detected: " + ground);

@@ -124,7 +124,7 @@ public class TapToPlaceParent : MonoBehaviour
         if (rotationType == RotationType.NORMAL && hasHit)
         {
             // Rotate this object's parent object to face the user.
-            interpolator.SetTargetRotation(Quaternion.LookRotation(-hitInfo.normal, Vector3.up));
+            interpolator.SetTargetRotation(Quaternion.FromToRotation(Vector3.forward, -hitInfo.normal));
         }
         else
         {
@@ -180,5 +180,6 @@ public enum RotationType
 public enum PositionType
 {
     NORMAL,
-    GROUND
+    GROUND,
+    FIXEDHEIGHT
 }

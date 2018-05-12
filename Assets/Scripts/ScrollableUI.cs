@@ -21,6 +21,16 @@ public class ScrollableUI : MonoBehaviour
 
     private SlideLoader slideLoader;
 
+    private void OnEnable()
+    {
+        
+    }
+
+    private void OnDisable()
+    {
+        
+    }
+
     private void Start()
     {
         rawImage.enabled = false;

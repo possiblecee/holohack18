@@ -20,7 +20,7 @@ public class SlideLoader : MonoBehaviour {
 
     private List<string> _slideResourcePaths;
 
-    void Start()
+    void Awake()
     {
         _init = true;
         _client = new WebClient(this);

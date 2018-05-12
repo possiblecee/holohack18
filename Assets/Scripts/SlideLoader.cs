@@ -3,8 +3,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using System.Collections;
+using System.Web;
 
 public class SlideLoader : MonoBehaviour {
+
+    private static readonly string BaseUrl = "http://magnum-force-chicken.westeurope.cloudapp.azure.com/api";
+
+    public void LoadSlide(string slideUrl, OnSlidesLoaded callback)
+    {
+        _slideResourcePaths.Clear();
+        var url = string.Format("{0}/{1}/{2}", BaseUrl, "convert", WWW.EscapeURL(slideUrl));
+        _client.Get(url, OnReceive);
+        StartCoroutine(CheckDownloadState(callback));
+    }
 
     private static readonly string TestUrl = "http://magnum-force-chicken.westeurope.cloudapp.azure.com/api/convert/https%3A%2F%2Fwww.sample-videos.com%2Fppt%2FSample-PPT-File-500kb.ppt";
 
@@ -77,17 +88,18 @@ public class SlideLoader : MonoBehaviour {
 
             _slideResourcePaths.Add(prefix + "_" + fileName);
 
-            FileStream file = File.Open(filePath, FileMode.Create);
-            if (texture != null)
+            using (var file = File.Open(filePath, FileMode.Create))
             {
-                var bytes = texture.EncodeToPNG();
-                file.Write(bytes, 0, bytes.Length);
+                if (texture != null)
+                {
+                    var bytes = texture.EncodeToPNG();
+                    file.Write(bytes, 0, bytes.Length);
+                }
+                else
+                {
+                    File.Delete(filePath);
+                }
             }
-            else
-            {
-                File.Delete(filePath);
-            }
-            file.Close();
         }
     }
 	

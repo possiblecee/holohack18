@@ -52,6 +52,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   silenceTreshold: 10
-  detectionTimeout: 60
-  mPanel: {fileID: 0}
-  mStatus: {fileID: 0}
+  detectionTimeout: 600
+  Status: 2
+  StatusChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  ApplicationReset:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  AutoStart: 1

@@ -70,17 +70,18 @@ public class SlideLoader : MonoBehaviour {
 
             _slideResourcePaths.Add(prefix + "_" + fileName);
 
-            FileStream file = File.Open(filePath, FileMode.Create);
-            if (texture != null)
+            using (var file = File.Open(filePath, FileMode.Create))
             {
-                var bytes = texture.EncodeToPNG();
-                file.Write(bytes, 0, bytes.Length);
+                if (texture != null)
+                {
+                    var bytes = texture.EncodeToPNG();
+                    file.Write(bytes, 0, bytes.Length);
+                }
+                else
+                {
+                    File.Delete(filePath);
+                }
             }
-            else
-            {
-                File.Delete(filePath);
-            }
-            // file.Close();
         }
     }
 	

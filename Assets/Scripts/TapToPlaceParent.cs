@@ -74,7 +74,7 @@ public class TapToPlaceParent : MonoBehaviour
             {
                 // Move this object's parent object to
                 // where the raycast hit the Spatial Mapping mesh.
-                Debug.Log("HITT!!!");
+                //Debug.Log("HITT!!!");
                 this.transform.position = hitInfo.point + (gazeDirection * -0.01f);
 
                 if(rotationType == RotationType.NORMAL) {
@@ -88,7 +88,7 @@ public class TapToPlaceParent : MonoBehaviour
                     Quaternion toQuat = Camera.main.transform.localRotation;
                     toQuat.x = 0;
                     toQuat.z = 0;
-                    this.transform.parent.rotation = toQuat;
+                    this.transform.rotation = toQuat;
                 }
             }
         }

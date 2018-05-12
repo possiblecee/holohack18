@@ -10,6 +10,7 @@ public class AppController : Singleton<AppController> {
 
 	private AppState applicationState;
 	private GestureRecognizer recognizer;
+	[SerializeField] private ScoreCalculator scoreCalculator;
 	[SerializeField] private GameObject welcomeUI;
 	[SerializeField] private GameObject selectDocumentUI;
 	[SerializeField] private PlaceObjectUIController placeObjectUI;
@@ -43,6 +44,8 @@ public class AppController : Singleton<AppController> {
 	// After all object placed, this method will be executed
 	public void OnPressentationStarted() {
 		// Use this to start the pressentation
+		scoreCalculator.StartCalculation(10);
+		SpeechRecognition.Instance.StartSpeech();
 	}
 
     private void projection_OnObjectPlaced(object sender, EventArgs e)

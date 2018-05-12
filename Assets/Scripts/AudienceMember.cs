@@ -36,7 +36,8 @@ public class AudienceMember : MonoBehaviour
     }
 
     public void SetInterest(float interest) {
-        this.animatorComp.SetFloat("Interest", interest);
+        if(this.animatorComp)
+            this.animatorComp.SetFloat("Interest", interest);
     }
 
     /// <summary>

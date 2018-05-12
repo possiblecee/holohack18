@@ -247,7 +247,14 @@ PlayerSettings:
     banner: {fileID: 0}
   androidGamepadSupportLevel: 0
   resolutionDialogBanner: {fileID: 0}
-  m_BuildTargetIcons: []
+  m_BuildTargetIcons:
+  - m_BuildTarget: 
+    m_Icons:
+    - serializedVersion: 2
+      m_Icon: {fileID: 2800000, guid: 81a6a73f4d087904ea6024810522c1e6, type: 3}
+      m_Width: 128
+      m_Height: 128
+      m_Kind: 0
   m_BuildTargetBatching: []
   m_BuildTargetGraphicsAPIs: []
   m_BuildTargetVRSettings:
@@ -565,7 +572,12 @@ PlayerSettings:
   metroCertificateIssuer: DefaultCompany
   metroCertificateNotAfter: 00359ee58706d501
   metroApplicationDescription: hololenstest
-  wsaImages: {}
+  wsaImages:
+    1376356: Assets/Textures/ikon_44x44.png
+    1376396: Assets/Textures/ikon_62x62.png
+    1376496: Assets/Textures/ikon_106x106.png
+    2031816: Assets/Textures/ikon_88x88.png
+    2228374: Assets/Textures/ikon_465x465.png
   metroTileShortName: hololenstest
   metroCommandLineArgsFile: 
   metroTileShowName: 0

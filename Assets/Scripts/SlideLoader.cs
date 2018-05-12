@@ -81,7 +81,7 @@ public class SlideLoader : MonoBehaviour {
             {
                 File.Delete(filePath);
             }
-            file.Close();
+            // file.Close();
         }
     }
 	

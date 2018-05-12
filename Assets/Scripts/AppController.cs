@@ -13,7 +13,7 @@ public class AppController : Singleton<AppController> {
 	[SerializeField] private ScoreCalculator scoreCalculator;
 	[SerializeField] private GameObject welcomeUI;
 	[SerializeField] private GameObject selectDocumentUI;
-	[SerializeField] private PlaceObjectUIController placeObjectUI;
+	[SerializeField] private GameObject placeObjectUI;
 	[SerializeField] private GameObject statistics;
 	[SerializeField] private TapToPlaceParent podium;
 	[SerializeField] private TapToPlaceParent projection;

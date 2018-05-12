@@ -8,6 +8,7 @@ public class ScoreText : MonoBehaviour {
 
     void OnEnable()
     {
+        this.scoreText = GetComponent<Text>();
         ScoreCalculator.onScoreChange += ScoreCalculator_OnScoreChange;
     }
 

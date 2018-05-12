@@ -8,6 +8,9 @@ using UnityEngine.Windows.Speech;
 
 public class SpeechRecognition : Singleton<SpeechRecognition>
 {
+    [Serializable]
+    public enum SpeechStatus { Silence, Speeking, NotStarted, Stopped }
+    
     public class SpeechStatistics
     {
         public float StartTime;
@@ -51,9 +54,6 @@ public class SpeechRecognition : Singleton<SpeechRecognition>
 
         public float Time;
     }
-
-    [Serializable]
-    public enum SpeechStatus { Silence, Speeking, NotStarted, Stopped }
 
     public float silenceTreshold = 10;
 

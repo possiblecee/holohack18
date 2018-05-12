@@ -1,22 +1,93 @@
 ﻿using HoloToolkit.Unity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Windows.Speech;
 
 public class SpeechRecognition : Singleton<SpeechRecognition>
 {
+    public class SpeechStatistics
+    {
+        public float StartTime;
+
+        public int BreaksCount = 0;
+
+        public int WordCount = 0;
+
+        public List<SpeechText> Texts = new List<SpeechText>();
+
+        public float GetTime()
+        {
+            return (int)(Time.time - StartTime);
+        }
+
+        public int CalculateWordCount()
+        {
+            return Texts.Select(t => t.Text.Split(' ').Length).Sum();
+        }
+
+        public void AddText(string text)
+        {
+            Texts.Add(new SpeechText { Text = text, Time = Time.time });
+            WordCount += text.Split(' ').Length;
+        }
+
+        public float GetAvgSpeed()
+        {
+            return WordCount / (GetTime() / 60f);
+        }
+
+        public float GetActualSpeed()
+        {
+            return WordCount / (GetTime() / 60f);
+        }
+    }
+
+    public struct SpeechText
+    {
+        public string Text;
+
+        public float Time;
+    }
+
+    [Serializable]
+    public enum SpeechStatus { Silence, Speeking, NotStarted, Stopped }
+
     public float silenceTreshold = 10;
 
-    public float detectionTimeout = 60;
+    public float detectionTimeout = 600;
 
-    [SerializeField]
-    private UnityEngine.UI.Image mPanel;
+    public SpeechStatistics Statistics = new SpeechStatistics();
 
-    [SerializeField]
-    private UnityEngine.UI.Text mStatus;
+    public SpeechStatus Status = SpeechStatus.NotStarted;
+
+    public UnityEvent StatusChanged;
+
+    public UnityEvent ApplicationReset;
+
+    public bool AutoStart;
 
     private DictationRecognizer dictationRecogniser;
 
-    private float lastWordSaid, lastSilenceRaised;
+    private float lastWordSaid;
+
+    private const string RestartCommand = "restart";
+
+    public void StartSpeech()
+    {
+        dictationRecogniser.Start();
+        Statistics = new SpeechStatistics { StartTime = Time.time };
+        Status = SpeechStatus.Speeking;
+
+        lastWordSaid = Time.time;
+    }
+
+    public void StopSpeech()
+    {
+        dictationRecogniser.Stop();
+    }
 
     // Use this for initialization
     void Start()
@@ -26,64 +97,84 @@ public class SpeechRecognition : Singleton<SpeechRecognition>
         dictationRecogniser.InitialSilenceTimeoutSeconds = detectionTimeout;
         dictationRecogniser.AutoSilenceTimeoutSeconds = detectionTimeout;
 
+        dictationRecogniser.DictationResult += DictationRecogniser_DictationResult;
+        dictationRecogniser.DictationHypothesis += DictationRecogniser_DictationHypothesis;
+        dictationRecogniser.DictationComplete += DictationRecogniser_DictationComplete;
+        dictationRecogniser.DictationError += DictationRecogniser_DictationError;
+
+        if(AutoStart)
+        {
+            StartSpeech();
+        }
+    }
+
+    private void DictationRecogniser_DictationComplete(DictationCompletionCause completionCause)
+    {
+        if (completionCause != DictationCompletionCause.Complete)
+            Debug.LogWarningFormat("Dictation completed unsuccessfully: {0}.", completionCause);
+
+        Status = SpeechStatus.Stopped;
+    }
+
+    private void DictationRecogniser_DictationResult(string text, ConfidenceLevel confidence)
+    {
+        this.Statistics.AddText(text);
+        Debug.LogFormat("Dictation result: {0}", text);
+
+        if (text == RestartCommand)
+        {
+            this.ApplicationReset.Invoke();
+        }
+    }
+
+    private void DictationRecogniser_DictationHypothesis(string text)
+    {
+        this.Status = SpeechStatus.Speeking;
         lastWordSaid = Time.time;
+    }
 
-        dictationRecogniser.DictationResult += (text, confidence) =>
-        {
-            mPanel.color = Color.green;
-            mStatus.text = text;
-
-            Debug.LogFormat("Dictation result: {0}", text);
-        };
-
-        dictationRecogniser.DictationHypothesis += (text) =>
-        {
-            //Debug.LogFormat("Dictation hypothesis: {0}", text);
-            lastWordSaid = Time.time;
-            //m_Hypotheses.text += text;
-        };
-
-        dictationRecogniser.DictationComplete += (completionCause) =>
-        {
-            if (completionCause != DictationCompletionCause.Complete)
-                Debug.LogWarningFormat("Dictation completed unsuccessfully: {0}.", completionCause);
-        };
-
-        dictationRecogniser.DictationError += (error, hresult) =>
-        {
-            Debug.LogWarningFormat("Dictation error: {0}; HResult = {1}.", error, hresult);
-        };
-
-        dictationRecogniser.Start();
+    private void DictationRecogniser_DictationError(string error, int hresult)
+    {
+        Debug.LogWarningFormat("Dictation error: {0}; HResult = {1}.", error, hresult);
+        Status = SpeechStatus.Stopped;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (dictationRecogniser != null && 
+        if (dictationRecogniser != null &&
+            this.Status == SpeechStatus.Speeking &&
             dictationRecogniser.Status == SpeechSystemStatus.Running)
         {
-
             float time = Time.time;
             if (time > lastWordSaid + silenceTreshold)
             {
-                if (time > lastSilenceRaised + 5)
+                if (this.Status != SpeechStatus.Silence)
                 {
-                    mPanel.color = Color.red;
-                    mStatus.text = string.Format("Too long silence: {0}s.", (int)(time - lastWordSaid));
-                    lastSilenceRaised = time;
+                    this.Status = SpeechStatus.Silence;
+                    this.Statistics.BreaksCount++;
                 }
             }
-            else if(mPanel.color == Color.red)
-            {
-                mPanel.color = Color.green;
-                mStatus.text = "Speaking ...";
-            }
         }
-        else
+
+        if (dictationRecogniser != null &&
+            this.Status == SpeechStatus.Speeking &&
+            dictationRecogniser.Status == SpeechSystemStatus.Stopped)
         {
-            mPanel.color = Color.red;
-            mStatus.text = "Speech detection stopped";
+            Status = SpeechStatus.Stopped;
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        if (dictationRecogniser != null)
+        {
+            dictationRecogniser.Stop();
+            dictationRecogniser.DictationResult -= DictationRecogniser_DictationResult;
+            dictationRecogniser.DictationHypothesis -= DictationRecogniser_DictationHypothesis;
+            dictationRecogniser.DictationComplete -= DictationRecogniser_DictationComplete;
+            dictationRecogniser.DictationError -= DictationRecogniser_DictationError;
+            dictationRecogniser.Dispose();
         }
     }
 }

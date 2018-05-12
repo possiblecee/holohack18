@@ -25,7 +25,12 @@ public class SlideLoader : MonoBehaviour {
         _init = true;
         _client = new WebClient(this);
         _slideResourcePaths = new List<string>();
-        LoadTestSlide(null);
+        LoadTestSlide(TestOnSlidesLoaded);
+    }
+
+    void TestOnSlidesLoaded(List<string> slideResourcePaths)
+    {
+        Debug.Log(slideResourcePaths);
     }
 
     public void LoadTestSlide(OnSlidesLoaded callback)
@@ -43,6 +48,7 @@ public class SlideLoader : MonoBehaviour {
         {
             callback(_slideResourcePaths);
         }
+        _remainingSlides = null;
     }
 
     void OnReceive(string text, bool success, params object[] extensions)
@@ -59,13 +65,13 @@ public class SlideLoader : MonoBehaviour {
         }
 	}
 
-    void OnSlideImageReceive(Texture2D texture, bool success, string errorText, params object[] extensions)
+    void OnSlideImageReceive(Texture2D texture, bool success, string errorText, params object[] extra)
     {
         if (success)
         {
             _remainingSlides--;
-            var prefix = extensions[0] as string;
-            var fileName = extensions[1] as string;
+            var prefix = extra[0] as string;
+            var fileName = extra[1] as string;
 
             var filePath = Application.streamingAssetsPath + "/" + prefix + "_" + fileName;
 

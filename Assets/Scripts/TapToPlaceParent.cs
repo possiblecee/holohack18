@@ -69,18 +69,18 @@ public class TapToPlaceParent : MonoBehaviour
 
             RaycastHit hitInfo;
             if (Physics.Raycast(headPosition, gazeDirection, out hitInfo,
-                30.0f, -1))
+                30.0f, SpatialMappingManager.Instance.LayerMask))
             {
                 // Move this object's parent object to
                 // where the raycast hit the Spatial Mapping mesh.
                 Debug.Log("HITT!!!");
-                this.transform.position = hitInfo.point;
+                this.transform.position = hitInfo.point + (gazeDirection * -0.01f);
 
                 // Rotate this object's parent object to face the user.
-                Quaternion toQuat = mainCam.transform.localRotation;
+                /*Quaternion toQuat = mainCam.transform.localRotation;
                 toQuat.x = 0;
                 toQuat.z = 0;
-                this.transform.rotation = toQuat;
+                this.transform.rotation = toQuat;*/
             }
         }
     }

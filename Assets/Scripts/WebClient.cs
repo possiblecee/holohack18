@@ -151,7 +151,7 @@ public class WebClient : MonoBehaviour {
 			{
 				// Process the image
 				var resultingTexture = new Texture2D(4, 4);
-				if (!resultingTexture.SafeLoadImage(www.bytes))
+				if (!resultingTexture.LoadImage(www.bytes))
 				{
 					OnRequestFailed(request, "The acquired data was not eligible to be used as a texture.");
 				}

@@ -7098,6 +7098,11 @@ Prefab:
       propertyPath: AutoStart
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114549810497146546, guid: 98980587843dc3b45b774ab6e8f4285e,
+        type: 2}
+      propertyPath: AllowRestartAttempt
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 98980587843dc3b45b774ab6e8f4285e, type: 2}
   m_IsPrefabParent: 0

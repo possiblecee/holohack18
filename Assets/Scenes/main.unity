@@ -3768,7 +3768,7 @@ Prefab:
       objectReference: {fileID: 1708315570}
     - target: {fileID: 1276910262446644, guid: d6405be88e13449449a7655a8d0fc255, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114985382318538168, guid: d6405be88e13449449a7655a8d0fc255,
         type: 2}
@@ -5450,6 +5450,11 @@ Prefab:
         type: 2}
       propertyPath: m_OnEndEdit.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114921472206051388, guid: e1482fff1519a2e488f06b4b7de276ef,
+        type: 2}
+      propertyPath: m_Text
+      value: https://bit.ly/2IA6qUZ
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e1482fff1519a2e488f06b4b7de276ef, type: 2}

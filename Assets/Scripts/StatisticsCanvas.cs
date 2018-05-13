@@ -12,14 +12,22 @@ public class StatisticsCanvas : MonoBehaviour {
     public Text Speed;
     public Text Message;
 
+    private Interpolator interpolator;
+
     // Use this for initialization
-    void Start () {
+    private void Start()
+    {
+        interpolator = this.GetComponent<Interpolator>();
+        if (interpolator == null)
+        {
+            interpolator = this.gameObject.AddComponent<Interpolator>();
+        }
     }
-	
-	// Update is called once per frame
-	void Update () {
-        this.transform.position = CameraCache.Main.transform.position;
-        this.transform.rotation = CameraCache.Main.transform.rotation;
+
+    // Update is called once per frame
+    void Update () {
+        interpolator.SetTargetPosition(CameraCache.Main.transform.position);
+        interpolator.SetTargetRotation(CameraCache.Main.transform.rotation);
 
         var stat = SpeechRecognition.Instance.Statistics;
         Time.text = stat.GetTime() + " sec";

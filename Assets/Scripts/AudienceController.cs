@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections;
 
 /// <summary>
 /// 
@@ -24,6 +25,11 @@ public class AudienceController : MonoBehaviour
     public void NotifyWatchModeChange(bool state){
         if(onWatchStateChange != null)
             onWatchStateChange(this, new WatchStateEventArgs(state));
+    }
+
+    void Start()
+    {
+        InitMembers();
     }
 
     void OnEnable()
@@ -70,9 +76,21 @@ public class AudienceController : MonoBehaviour
         }
     }
 
+    public void InitMembers(){
+        foreach(var watcher in this._audience){
+            watcher.SetOffset(UnityEngine.Random.Range(0, 1.0f));
+        }
+    }
+
     public void SetInterest(float interest){
         foreach(var watcher in this._audience){
-            watcher.SetInterest(interest);
+            SetAnim(watcher, interest);
         }
+    }
+
+    public IEnumerator SetAnim(AudienceMember watcher, float interest)
+    {
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0, 5.0f));
+        watcher.SetInterest(interest);
     }
 }

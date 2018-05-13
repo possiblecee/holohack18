@@ -46,7 +46,7 @@ public class ScrollableUI : MonoBehaviour
     {
         if (!String.IsNullOrEmpty(URLSingleton.Instance.url))
         {
-            slideLoader.LoadSlideWithShortURL(URLSingleton.Instance.url, GetSlides);
+            slideLoader.LoadSlide(URLSingleton.Instance.url, GetSlides);            
         }
         else
         {

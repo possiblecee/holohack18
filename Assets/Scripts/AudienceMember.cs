@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 /// <summary>
 /// Represents a single member in the audience.
@@ -88,5 +89,10 @@ public class AudienceMember : MonoBehaviour
 
         // Cache presentation state
         _isPresentationOngoing = e.isStarted;
+    }
+
+    internal void SetOffset(float v)
+    {
+        this.animatorComp.SetFloat("CycleOffset", v);
     }
 }

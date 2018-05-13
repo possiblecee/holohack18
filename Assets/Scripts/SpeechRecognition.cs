@@ -10,7 +10,7 @@ public class SpeechRecognition : Singleton<SpeechRecognition>
 {
     [Serializable]
     public enum SpeechStatus { Silence, Speeking, NotStarted, Stopped }
-    
+
     public class SpeechStatistics
     {
         public float StartTime;
@@ -20,6 +20,8 @@ public class SpeechRecognition : Singleton<SpeechRecognition>
         public int WordCount = 0;
 
         public List<SpeechText> Texts = new List<SpeechText>();
+
+        public List<string> ForbiddenWords = new List<string>();
 
         public float GetTime()
         {
@@ -31,10 +33,20 @@ public class SpeechRecognition : Singleton<SpeechRecognition>
             return Texts.Select(t => t.Text.Split(' ').Length).Sum();
         }
 
-        public void AddText(string text)
+        public void AddText(string text, string[] forbiddenWords)
         {
             Texts.Add(new SpeechText { Text = text, Time = Time.time });
-            WordCount += text.Split(' ').Length;
+            var words = text.Split(' ');
+            WordCount += words.Length;
+
+            if (forbiddenWords != null && forbiddenWords.Any())
+            {
+                var tmp = forbiddenWords.Where(t => words.Contains(t)).ToArray();
+                if (tmp.Any())
+                {
+                    this.ForbiddenWords.AddRange(tmp);
+                }
+            }
         }
 
         public float GetAvgSpeed()
@@ -59,19 +71,23 @@ public class SpeechRecognition : Singleton<SpeechRecognition>
 
     public float detectionTimeout = 600;
 
+    [HideInInspector]
     public SpeechStatistics Statistics = new SpeechStatistics();
 
+    [HideInInspector]
     public SpeechStatus Status = SpeechStatus.NotStarted;
-
-    public UnityEvent StatusChanged;
 
     public UnityEvent ApplicationReset;
 
     public bool AutoStart;
 
+    public bool AllowRestartAttempt;
+
+    public string[] ForbiddenWords;
+
     private DictationRecognizer dictationRecogniser;
 
-    private float lastWordSaid;
+    private float lastWordSaid, lastRestartAttempt;
 
     private const string RestartCommand = "restart";
 
@@ -87,6 +103,7 @@ public class SpeechRecognition : Singleton<SpeechRecognition>
     public void StopSpeech()
     {
         dictationRecogniser.Stop();
+        Status = SpeechStatus.Stopped;
     }
 
     // Use this for initialization
@@ -102,7 +119,7 @@ public class SpeechRecognition : Singleton<SpeechRecognition>
         dictationRecogniser.DictationComplete += DictationRecogniser_DictationComplete;
         dictationRecogniser.DictationError += DictationRecogniser_DictationError;
 
-        if(AutoStart)
+        if (AutoStart)
         {
             StartSpeech();
         }
@@ -112,13 +129,11 @@ public class SpeechRecognition : Singleton<SpeechRecognition>
     {
         if (completionCause != DictationCompletionCause.Complete)
             Debug.LogWarningFormat("Dictation completed unsuccessfully: {0}.", completionCause);
-
-        Status = SpeechStatus.Stopped;
     }
 
     private void DictationRecogniser_DictationResult(string text, ConfidenceLevel confidence)
     {
-        this.Statistics.AddText(text);
+        this.Statistics.AddText(text, this.ForbiddenWords);
         Debug.LogFormat("Dictation result: {0}", text);
 
         if (text == RestartCommand)
@@ -158,10 +173,19 @@ public class SpeechRecognition : Singleton<SpeechRecognition>
         }
 
         if (dictationRecogniser != null &&
-            this.Status == SpeechStatus.Speeking &&
+            (this.Status == SpeechStatus.Speeking || this.Status == SpeechStatus.Silence) &&
             dictationRecogniser.Status == SpeechSystemStatus.Stopped)
         {
+
             Status = SpeechStatus.Stopped;
+
+            if (AllowRestartAttempt)
+            {
+                Debug.Log("Dictation restart attempt ...");
+                dictationRecogniser.Start();
+                Status = SpeechStatus.Speeking;
+            }
+
         }
     }
 
@@ -169,7 +193,11 @@ public class SpeechRecognition : Singleton<SpeechRecognition>
     {
         if (dictationRecogniser != null)
         {
-            dictationRecogniser.Stop();
+            if (dictationRecogniser.Status == SpeechSystemStatus.Running)
+            {
+                dictationRecogniser.Stop();
+            }
+
             dictationRecogniser.DictationResult -= DictationRecogniser_DictationResult;
             dictationRecogniser.DictationHypothesis -= DictationRecogniser_DictationHypothesis;
             dictationRecogniser.DictationComplete -= DictationRecogniser_DictationComplete;

@@ -15,7 +15,10 @@ public class AppController : Singleton<AppController> {
 	[SerializeField] private GameObject selectDocumentUI;
 	[SerializeField] private GameObject placeObjectUI;
 	[SerializeField] private GameObject statistics;
-	[SerializeField] private TapToPlaceParent podium;
+    [SerializeField] private GameObject podiumHint;
+    [SerializeField] private GameObject presentationHint;
+    [SerializeField] private GameObject scrollableUI;
+    [SerializeField] private TapToPlaceParent podium;
 	[SerializeField] private TapToPlaceParent projection;
 	[SerializeField] private TapToPlaceParent audience;
 	private AudienceController audienceController;
@@ -26,6 +29,8 @@ public class AppController : Singleton<AppController> {
 		recognizer = new GestureRecognizer();
 		recognizer.StartCapturingGestures();
 		audienceController = audience.GetComponent<AudienceController>();
+
+        scrollableUI.SetActive(false);
 	}
 
 	void OnEnable()
@@ -54,6 +59,7 @@ public class AppController : Singleton<AppController> {
 		audience.recognizer = this.recognizer;
 		audience.gameObject.SetActive(true);
 		audience.SetPlace(true);
+        presentationHint.SetActive(false);
     }
 
     void OnDisable()
@@ -69,12 +75,10 @@ public class AppController : Singleton<AppController> {
 		projection.gameObject.SetActive(true);
 		projection.SetPlace(true);
 		projection.recognizer = recognizer;
+        podiumHint.SetActive(false);
+        scrollableUI.SetActive(true);
     }
-
-    // Update is called once per frame
-    void Update () {
-	}
-
+     
 	public void RestartApplication() {
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}

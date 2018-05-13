@@ -5,7 +5,8 @@ using System.IO;
 using System.Collections;
 using System.Web;
 
-public class SlideLoader : MonoBehaviour {
+public class SlideLoader : MonoBehaviour
+{
 
     private static readonly string BaseUrl = "http://magnum-force-chicken.westeurope.cloudapp.azure.com/api";
 
@@ -34,6 +35,13 @@ public class SlideLoader : MonoBehaviour {
         StartCoroutine(CheckDownloadState(callback));
     }
 
+    public void LoadSlideWithShortURL(string shortURL, OnSlidesLoaded callback)
+    {
+        _slideResourcePaths.Clear();
+        _client.Get(shortURL, OnReceive);
+        StartCoroutine(CheckDownloadState(callback));
+    }
+
     public void LoadTestSlide(OnSlidesLoaded callback)
     {
         var testUrl = "http://magnum-force-chicken.westeurope.cloudapp.azure.com/api/convert/https%3A%2F%2Fwww.sample-videos.com%2Fppt%2FSample-PPT-File-500kb.ppt";
@@ -54,7 +62,7 @@ public class SlideLoader : MonoBehaviour {
     }
 
     void OnReceive(string text, bool success, params object[] extensions)
-	{
+    {
         if (success)
         {
             var result = ConversionResult.CreateFromJSON(text);
@@ -70,7 +78,7 @@ public class SlideLoader : MonoBehaviour {
             Debug.LogError("Conversion failed.");
             _remainingSlides = 0;
         }
-	}
+    }
 
     void OnSlideImageReceive(Texture2D texture, bool success, string errorText, params object[] extra)
     {
@@ -100,17 +108,17 @@ public class SlideLoader : MonoBehaviour {
             }
         }
     }
-	
-	void Update () 
-	{
-		if (!_init) 
-		{
-			return;
-		}
 
-		if (_client.NumberOfPendingRequests > 0) 
-		{
-			_client.ProcessNextRequest ();
-		}
-	}
+    void Update()
+    {
+        if (!_init)
+        {
+            return;
+        }
+
+        if (_client.NumberOfPendingRequests > 0)
+        {
+            _client.ProcessNextRequest();
+        }
+    }
 }

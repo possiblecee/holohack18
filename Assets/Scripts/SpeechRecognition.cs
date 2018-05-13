@@ -181,7 +181,9 @@ public class SpeechRecognition : Singleton<SpeechRecognition>
 
             if (AllowRestartAttempt)
             {
-                StartSpeech();
+                Debug.Log("Dictation restart attempt ...");
+                dictationRecogniser.Start();
+                Status = SpeechStatus.Speeking;
             }
 
         }
